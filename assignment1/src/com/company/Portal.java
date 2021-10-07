@@ -12,9 +12,9 @@ public class Portal {
     Map<Vaccine,Set<Hospital>> searchVaccine=new HashMap<>();
 
     void pressEnter(){
-        try {
-            System.in.read();
-        }catch (Exception e){}
+//        try {
+//            System.in.read();
+//        }catch (Exception e){}
     }
     void addVaccine(){
         System.out.print("Vaccine Name: ");
@@ -118,26 +118,67 @@ public class Portal {
             }
             System.out.print("Enter hospital id: ");
             hospital=hospitals.get(scanner.nextInt());
-            int s=0;
-            for (Slot slot : hospital.slots) {
-                System.out.println(s+"-> Day: "+slot.day+" Available Qty: "+slot.available+" Vaccine: "+slot.vaccine.name);
-                s++;
+            int s=0,n=0;
+            if(citizen.vaccinationStatus== Citizen.status.PARTIALLY_VACCINATED){
+                Vaccine vaccine=citizen.vaccineGiven;
+                for (Slot slot : hospital.slots) {
+                    if (slot.vaccine == vaccine && citizen.nextDueDate<=slot.day) {
+                        n++;
+                        System.out.println(s + "-> Day: " + slot.day + " Available Qty: " + slot.available + " Vaccine: " + slot.vaccine.name);
+                    }
+                    s++;
+                }
+            }else {
+                for (Slot slot : hospital.slots) {
+                    n++;
+                    System.out.println(s + "-> Day: " + slot.day + " Available Qty: " + slot.available + " Vaccine: " + slot.vaccine.name);
+
+                    s++;
+                }
+            }if(n==0){
+                System.out.println("No slots available");
+                return;
             }
+//            for (Slot slot : hospital.slots) {
+//                System.out.println(s+"-> Day: "+slot.day+" Available Qty: "+slot.available+" Vaccine: "+slot.vaccine.name);
+//                s++;
+//            }
             System.out.print("Choose Slot: ");
             citizen.bookSlot(hospital.slots.get(scanner.nextInt()));
             pressEnter();
         }else if(option==2){
             System.out.print("Enter Vaccine name: ");
             Vaccine vaccine=vaccineName.get(scanner.next());
+            if(citizen.vaccinationStatus== Citizen.status.PARTIALLY_VACCINATED && citizen.vaccineGiven!=vaccine){
+                System.out.println("Choose the correct vaccine.");
+                return;
+            }
             for (Hospital h : searchVaccine.get(vaccine)) {
                 System.out.println(h.hospitalID+" "+h.hospitalName);
             }
             System.out.print("Enter hospital id: ");
             hospital=hospitals.get(scanner.nextInt());
-            int s=0;
-            for (Slot slot : hospital.slots) {
-                if(slot.vaccine==vaccine)System.out.println(s+"-> Day: "+slot.day+" Available Qty: "+slot.available+" Vaccine: "+slot.vaccine.name);
-                s++;
+            int s=0,n=0;
+            if(citizen.vaccinationStatus== Citizen.status.PARTIALLY_VACCINATED){
+                for (Slot slot : hospital.slots) {
+                    if (slot.vaccine == vaccine && citizen.nextDueDate<=slot.day) {
+                        n++;
+                        System.out.println(s + "-> Day: " + slot.day + " Available Qty: " + slot.available + " Vaccine: " + slot.vaccine.name);
+                    }
+                    s++;
+                }
+            }else {
+                for (Slot slot : hospital.slots) {
+                    if (slot.vaccine == vaccine) {
+                        n++;
+                        System.out.println(s + "-> Day: " + slot.day + " Available Qty: " + slot.available + " Vaccine: " + slot.vaccine.name);
+                    }
+                    s++;
+                }
+            }
+            if(n==0){
+                System.out.println("No slots available");
+                return;
             }
             System.out.print("Choose Slot: ");
             citizen.bookSlot(hospital.slots.get(scanner.nextInt()));
@@ -150,7 +191,7 @@ public class Portal {
         int hospitalID= scanner.nextInt();
         Hospital hospital=hospitals.get(hospitalID);
         for (Slot slot : hospital.slots) {
-            System.out.println("Day: "+slot.day+" Vaccine: "+slot.vaccine.name+" Available Qty: "+slot.quantity);
+            System.out.println("Day: "+slot.day+" Vaccine: "+slot.vaccine.name+" Available Qty: "+slot.available);
         }pressEnter();
     }
     void getVaccinationStatus(){
