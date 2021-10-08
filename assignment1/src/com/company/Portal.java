@@ -31,7 +31,7 @@ public class Portal {
         Vaccine vaccine=new Vaccine(name,noOfDoses,gapBetweenDoses);
         vaccines.add(vaccine);
         vaccineName.put(name,vaccine);
-        System.out.print("Vaccine Name: "+name+", Number of Doses: "+noOfDoses+", Gap Between Doses: "+gapBetweenDoses);
+        System.out.println("Vaccine Name: "+name+", Number of Doses: "+noOfDoses+", Gap Between Doses: "+gapBetweenDoses);
         pressEnter();
     }
     void registerHospital(){
@@ -42,7 +42,7 @@ public class Portal {
         Hospital temp=new Hospital(hospitalName,pincode);
         hospitals.add(temp);
         System.out.println("Allocated Hospital ID is "+(Hospital.count-1));
-        System.out.print("Hospital Name: "+hospitalName+", PinCode: "+pincode+", Unique ID: "+(Hospital.count-1));
+        System.out.println("Hospital Name: "+hospitalName+", PinCode: "+pincode+", Unique ID: "+(Hospital.count-1));
         pressEnter();
     }
     void registerCitizen(){
@@ -52,11 +52,11 @@ public class Portal {
         int age=scanner.nextInt();
         System.out.print("Unique ID: ");
         String ID=scanner.next();
-        System.out.print("Citizen Name: "+name+", Age: "+age+", Unique ID: "+ID);
+        System.out.println("Citizen Name: "+name+", Age: "+age+", Unique ID: "+ID);
         if(age<18) {
-            System.out.print("\nOnly above 18 are allowed");
+            System.out.println("\nOnly above 18 are allowed");
         }else if(citizenIDs.containsKey(ID)){
-            System.out.print("\nAlready registered on this unique ID");
+            System.out.println("\nAlready registered on this unique ID");
         }else{
             Citizen citizen=new Citizen(name,age,ID);
             citizens.add(citizen);

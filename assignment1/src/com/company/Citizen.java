@@ -61,14 +61,14 @@ public class Citizen {
     }
     void printVaccinationStatus(){
         if(vaccinationStatus==status.REGISTERED){
-            System.out.print("REGISTERED");
+            System.out.println("REGISTERED");
         }else if(vaccinationStatus==status.PARTIALLY_VACCINATED){
-            System.out.print("PARTIALLY VACCINATED\n" +
+            System.out.println("PARTIALLY VACCINATED\n" +
                     "Vaccine Given: "+vaccineGiven.name+"\n" +
                     "Number of Doses given: "+noOfDosesGiven+"\n" +
                     "Next Dose due date: "+nextDueDate);
         }else {
-            System.out.print("FULLY VACCINATED\n" +
+            System.out.println("FULLY VACCINATED\n" +
                     "Vaccine Given: "+vaccineGiven.name+"\n" +
                     "Number of Doses given: "+noOfDosesGiven);
         }
