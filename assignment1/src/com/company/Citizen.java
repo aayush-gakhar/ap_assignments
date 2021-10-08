@@ -32,6 +32,7 @@ public class Citizen {
                 }
                 noOfDosesGiven=1;
                 slot.book();
+                System.out.println(name+" vaccinated with "+slot.vaccine.name);
                 if(totalDoses==1){
                     vaccinationStatus=status.FULLY_VACCINATED;
                 }else {
@@ -45,6 +46,7 @@ public class Citizen {
                     return;
                 }
                 slot.book();
+                System.out.println(name+" vaccinated with "+slot.vaccine.name);
                 noOfDosesGiven++;
                 if(noOfDosesGiven==totalDoses){
                     vaccinationStatus=status.FULLY_VACCINATED;

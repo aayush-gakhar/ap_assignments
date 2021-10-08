@@ -19,18 +19,31 @@ public class Portal {
     void addVaccine(){
         System.out.print("Vaccine Name: ");
         String name=scanner.next();
+        if(vaccineName.containsKey(name)){
+            System.out.println("Vaccine name already exists.");
+            return;
+        }
         System.out.print("Number of Doses: ");
         int noOfDoses=scanner.nextInt();
+        if(noOfDoses<1){
+            System.out.println("No of doses should be positive");
+            return;
+        }
         int gapBetweenDoses;
         if(noOfDoses==1){
             gapBetweenDoses = 0;
         } else {
             System.out.print("Gap between Doses: ");
             gapBetweenDoses = scanner.nextInt();
+            if(gapBetweenDoses<0){
+                System.out.println("No of doses should be positive");
+                return;
+            }
         }
         Vaccine vaccine=new Vaccine(name,noOfDoses,gapBetweenDoses);
         vaccines.add(vaccine);
         vaccineName.put(name,vaccine);
+        searchVaccine.put(vaccine,new HashSet<>());
         System.out.println("Vaccine Name: "+name+", Number of Doses: "+noOfDoses+", Gap Between Doses: "+gapBetweenDoses);
         pressEnter();
     }
@@ -39,10 +52,14 @@ public class Portal {
         String hospitalName=scanner.next();
         System.out.print("PinCode: ");
         String pincode=scanner.next();
+        if(pincode.length()!=6){
+            System.out.println("Pincode length should  be 6");
+            return;
+        }
         Hospital temp=new Hospital(hospitalName,pincode);
         hospitals.add(temp);
-        System.out.println("Allocated Hospital ID is "+(Hospital.count-1));
-        System.out.println("Hospital Name: "+hospitalName+", PinCode: "+pincode+", Unique ID: "+(Hospital.count-1));
+        System.out.println("Allocated Hospital ID is "+String.format("%06d",Hospital.count-1));
+        System.out.println("Hospital Name: "+hospitalName+", PinCode: "+pincode+", Unique ID: "+String.format("%06d",Hospital.count-1));
         pressEnter();
     }
     void registerCitizen(){
@@ -50,13 +67,21 @@ public class Portal {
         String name=scanner.next();
         System.out.print("Age: ");
         int age=scanner.nextInt();
+        if(age<0){
+            System.out.println("age should be positive.");
+            return;
+        }
         System.out.print("Unique ID: ");
         String ID=scanner.next();
+        if(ID.length()!=12){
+            System.out.println("unique ID length should  be 12");
+            return;
+        }
         System.out.println("Citizen Name: "+name+", Age: "+age+", Unique ID: "+ID);
         if(age<18) {
-            System.out.println("\nOnly above 18 are allowed");
+            System.out.println("Only above 18 are allowed");
         }else if(citizenIDs.containsKey(ID)){
-            System.out.println("\nAlready registered on this unique ID");
+            System.out.println("Already registered on this unique ID");
         }else{
             Citizen citizen=new Citizen(name,age,ID);
             citizens.add(citizen);
@@ -66,33 +91,62 @@ public class Portal {
     }
     void createSlot(){
         System.out.print("Hospital ID: ");
-        int hospitalID=scanner.nextInt();
+        String hID=scanner.next();
+        if(hID.length()!=6){
+            System.out.println("hospital ID length should  be 6");
+            return;
+        }
+        int hospitalID=Integer.parseInt(hID);
+        if(hospitalID>=Hospital.count){
+            System.out.println("Given hospital ID does not exist");
+            return;
+        }
         Hospital hospital=hospitals.get(hospitalID);
         System.out.print("Enter number of Slots to be added: ");
         int n=scanner.nextInt();
+        if(n<1){
+            System.out.println("n should  be +ve");
+            return;
+        }
         for (int i = 0; i < n; i++) {
             System.out.print("Enter Day Number: ");
             int day=scanner.nextInt();
+            if(day<0){
+                System.out.println("day should  be +ve");
+                return;
+            }
             System.out.print("Enter Quantity: ");
             int quantity= scanner.nextInt();
+            if(quantity<1){
+                System.out.println("quantity should  be +ve");
+                return;
+            }
             System.out.println("Select Vaccine");
             int vac=0;
             for (Vaccine vaccine : vaccines) {
                 System.out.println(vac++ + ". "+vaccine.name);
             }
-            Vaccine vaccine=vaccines.get(scanner.nextInt());
-            hospital.addSlot(new Slot(day,quantity, vaccine));
-            if(!searchVaccine.containsKey(vaccine)){
-                searchVaccine.put(vaccine,new HashSet<>());
+            int in=scanner.nextInt();
+            if(in<0 || in>=vaccines.size()){
+                System.out.println("incorrect input");
+                return;
             }
+            Vaccine vaccine=vaccines.get(in);
+            hospital.addSlot(new Slot(day,quantity, vaccine));
+
             searchVaccine.get(vaccine).add(hospital);
-            System.out.println("Slot added by Hospital "+hospitalID+" for Day: "+day+", Available Quantity: "+quantity+" of Vaccine "+
+            System.out.println("Slot added by Hospital "+String.format("%06d",hospitalID)+" for Day: "+day+", Available Quantity: "+quantity+" of Vaccine "+
                     vaccine.name);
         }pressEnter();
     }
     void bookSlot(){
         System.out.print("Enter patient Unique ID: ");
-        Citizen citizen=citizenIDs.get(scanner.next());
+        String in=scanner.next();
+        if(!citizenIDs.containsKey(in)){
+            System.out.println("ID not registered.");
+            return;
+        }
+        Citizen citizen=citizenIDs.get(in);
         if(citizen.vaccinationStatus== Citizen.status.FULLY_VACCINATED){
             System.out.println("FULLY VACCINATED");
             return;
@@ -106,6 +160,7 @@ public class Portal {
             System.out.print("Enter option(1,2 or 3): ");
             option= scanner.nextInt();
         }
+        //todo
         Hospital hospital;
         if(option==1){
             System.out.print("Enter PinCode: ");
@@ -116,7 +171,7 @@ public class Portal {
                     System.out.println(ID+" "+h.hospitalName);
                 }ID++;
             }
-            System.out.print("Enter hospital id: ");
+            System.out.print("Enter option: ");
             hospital=hospitals.get(scanner.nextInt());
             int s=0,n=0;
             if(citizen.vaccinationStatus== Citizen.status.PARTIALLY_VACCINATED){
@@ -156,7 +211,7 @@ public class Portal {
             for (Hospital h : searchVaccine.get(vaccine)) {
                 System.out.println(h.hospitalID+" "+h.hospitalName);
             }
-            System.out.print("Enter hospital id: ");
+            System.out.print("Enter option: ");
             hospital=hospitals.get(scanner.nextInt());
             int s=0,n=0;
             if(citizen.vaccinationStatus== Citizen.status.PARTIALLY_VACCINATED){
