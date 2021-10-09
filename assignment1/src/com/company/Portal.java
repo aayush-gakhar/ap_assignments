@@ -3,13 +3,17 @@ package com.company;
 import java.util.*;
 
 public class Portal {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private final List<Vaccine> vaccines = new LinkedList<>();
     private final List<Hospital> hospitals = new LinkedList<>();
-//    private final List<Citizen> citizens = new LinkedList<>();
+    //    private final List<Citizen> citizens = new LinkedList<>();
     private final Map<String, Citizen> citizenIDs = new HashMap<>();
     private final Map<String, Vaccine> vaccineName = new HashMap<>();
     private final Map<Vaccine, Set<Hospital>> searchVaccine = new HashMap<>();
+
+    Portal(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     void pressEnter() {
 //        try {
@@ -17,29 +21,10 @@ public class Portal {
 //        }catch (Exception e){}
     }
 
-    void addVaccine() {
-        System.out.print("Vaccine Name: ");
-        String name = scanner.next();
+    void addVaccine(String name, int noOfDoses, int gapBetweenDoses) {
         if (vaccineName.containsKey(name)) {
             System.out.println("Vaccine name already exists.");
             return;
-        }
-        System.out.print("Number of Doses: ");
-        int noOfDoses = scanner.nextInt();
-        if (noOfDoses < 1) {
-            System.out.println("No of doses should be positive");
-            return;
-        }
-        int gapBetweenDoses;
-        if (noOfDoses == 1) {
-            gapBetweenDoses = 0;
-        } else {
-            System.out.print("Gap between Doses: ");
-            gapBetweenDoses = scanner.nextInt();
-            if (gapBetweenDoses < 0) {
-                System.out.println("No of doses should be positive");
-                return;
-            }
         }
         Vaccine vaccine = new Vaccine(name, noOfDoses, gapBetweenDoses);
         vaccines.add(vaccine);
@@ -49,15 +34,15 @@ public class Portal {
         pressEnter();
     }
 
-    void registerHospital(String hospitalName,String pincode) {
-        Hospital temp = new Hospital(hospitalName, pincode);
-        hospitals.add(temp);
-        System.out.println("Allocated Hospital ID is " + temp.gethID());
-        System.out.println("Hospital Name: " + hospitalName + ", PinCode: " + pincode + ", Unique ID: " + temp.gethID());
+    void registerHospital(String hospitalName, String pincode) {
+        Hospital hospital = new Hospital(hospitalName, pincode);
+        hospitals.add(hospital);
+        System.out.println("Allocated Hospital ID is " + hospital.gethID());
+        System.out.println("Hospital Name: " + hospitalName + ", PinCode: " + pincode + ", Unique ID: " + hospital.gethID());
         pressEnter();
     }
 
-    void registerCitizen(String name,int age,String ID) {
+    void registerCitizen(String name, int age, String ID) {
         if (age < 18) {
             System.out.println("Only above 18 are allowed");
         } else if (citizenIDs.containsKey(ID)) {
@@ -71,18 +56,7 @@ public class Portal {
 
     }
 
-    void createSlot() {
-        System.out.print("Hospital ID: ");
-        String hID = scanner.next();
-        if (hID.length() != 6) {
-            System.out.println("hospital ID length should  be 6");
-            return;
-        }
-        int hospitalID = Integer.parseInt(hID);
-        if (hospitalID >= Hospital.getCount()) {
-            System.out.println("Given hospital ID does not exist");
-            return;
-        }
+    void createSlot(int hospitalID) {
         Hospital hospital = hospitals.get(hospitalID);
         System.out.print("Enter number of Slots to be added: ");
         int n = scanner.nextInt();
@@ -114,11 +88,11 @@ public class Portal {
                 return;
             }
             Vaccine vaccine = vaccines.get(in);
-            Slot slot=new Slot(day, quantity, vaccine);
+            Slot slot = new Slot(day, quantity, vaccine);
             hospital.addSlot(slot); // association
 
             searchVaccine.get(vaccine).add(hospital);
-            System.out.println("Slot added by Hospital " + hospital.gethID() + " for "+slot);
+            System.out.println("Slot added by Hospital " + hospital.gethID() + " for " + slot);
         }
         pressEnter();
     }
@@ -174,13 +148,13 @@ public class Portal {
             }
             hospital = hospitals.get(ID);
             set = new HashSet<>();
-            hospital.displaySlots(citizen,set);
-            if(set.size()==0)return;
+            hospital.displaySlots(citizen, set);
+            if (set.size() == 0) return;
             chooseSlot(citizen, hospital, set);
         } else if (option == 2) {
             System.out.print("Enter Vaccine name: ");
-            String str=scanner.next();
-            if(!vaccineName.containsKey(str)){
+            String str = scanner.next();
+            if (!vaccineName.containsKey(str)) {
                 System.out.println("incorrect name");
                 return;
             }
@@ -206,11 +180,8 @@ public class Portal {
             }
             hospital = hospitals.get(ID);
             set = new HashSet<>();
-            hospital.displaySlots(vaccine,citizen,set);
-            if(set.size()==0){
-//                System.out.println("No slots available");
-                return;
-            }
+            hospital.displaySlots(vaccine, citizen, set);
+            if (set.size() == 0) return;
             chooseSlot(citizen, hospital, set);
         }
     }
@@ -231,7 +202,8 @@ public class Portal {
         if (hospitalID < 0 || hospitalID >= hospitals.size()) {
             System.out.println("Invalid ID");
             return;
-        } Hospital hospital = hospitals.get(hospitalID);
+        }
+        Hospital hospital = hospitals.get(hospitalID);
         hospital.displaySlots();
         pressEnter();
     }
@@ -244,5 +216,103 @@ public class Portal {
         System.out.print("Status: ");
         citizenIDs.get(ID).printVaccinationStatus();
         pressEnter();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Portal portal = new Portal(scanner);
+        String menuOptions = """
+                ---------------------------------
+                1. Add Vaccine
+                2. Register Hospital
+                3. Register Citizen
+                4. Add Slot for Vaccination
+                5. Book Slot for Vaccination
+                6. List all slots for a hospital
+                7. Check Vaccination Status
+                8. Exit
+                ---------------------------------""";
+        System.out.println("CoWin Portal initialized....");
+        while (true) {
+            System.out.println(menuOptions);
+            int query = scanner.nextInt();
+            if (query < 0 || query > 8) {
+                System.out.println("Wrong query!!!");
+            } else if (query == 1) {
+                System.out.print("Vaccine Name: ");
+                String name = scanner.next();
+                System.out.print("Number of Doses: ");
+                int noOfDoses = scanner.nextInt();
+                if (noOfDoses < 1) {
+                    System.out.println("No of doses should be positive");
+                    return;
+                }
+                int gapBetweenDoses;
+                if (noOfDoses == 1) {
+                    gapBetweenDoses = 0;
+                } else {
+                    System.out.print("Gap between Doses: ");
+                    gapBetweenDoses = scanner.nextInt();
+                    if (gapBetweenDoses < 0) {
+                        System.out.println("No of doses should be positive");
+                        return;
+                    }
+                }
+                portal.addVaccine(name, noOfDoses, gapBetweenDoses);
+            } else if (query == 2) {
+                System.out.print("Hospital Name: ");
+                String hospitalName = scanner.next();
+                System.out.print("PinCode: ");
+                String pincode = scanner.next();
+                if (pincode.length() != 6) {
+                    System.out.println("Pincode length should  be 6");
+                    return;
+                }
+                portal.registerHospital(hospitalName, pincode);
+            } else if (query == 3) {
+                System.out.print("Citizen Name: ");
+                String name = scanner.next();
+                System.out.print("Age: ");
+                int age = scanner.nextInt();
+                if (age < 0) {
+                    System.out.println("age should be positive.");
+                    return;
+                }
+                System.out.print("Unique ID: ");
+                String ID = scanner.next();
+                if (ID.length() != 12) {
+                    System.out.println("unique ID length should  be 12");
+                    return;
+                }
+                System.out.println("Citizen Name: " + name + ", Age: " + age + ", Unique ID: " + ID);
+                portal.registerCitizen(name, age, ID);
+            } else if (query == 4) {
+                System.out.print("Hospital ID: ");
+                String hID = scanner.next();
+                if (hID.length() != 6) {
+                    System.out.println("hospital ID length should  be 6");
+                    return;
+                }
+                int hospitalID = Integer.parseInt(hID);
+                if (hospitalID >= Hospital.getCount()) {
+                    System.out.println("Given hospital ID does not exist");
+                    return;
+                }
+                portal.createSlot(hospitalID);
+            } else if (query == 5) {
+                portal.bookSlot();
+            } else if (query == 6) {
+                System.out.print("Enter Hospital Id: ");
+                int hospitalID = scanner.nextInt();
+                portal.getSlot(hospitalID);
+            } else if (query == 7) {
+                System.out.print("Enter Patient ID: ");
+                String ID = scanner.next();
+                portal.getVaccinationStatus(ID);
+            } else if (query == 8) {
+                System.out.println("------------------------------------------------------------------------------");
+                break;
+            }
+        }
     }
 }

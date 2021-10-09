@@ -57,9 +57,10 @@ public class Citizen {
         return vaccineGiven;
     }
 
-    boolean canTakeVaccine(Vaccine vaccine){
+    boolean canTakeVaccine(Vaccine vaccine) {
         return getVaccinationStatus() == status.PARTIALLY_VACCINATED && getVaccineGiven() != vaccine;
     }
+
     void bookSlot(Slot slot) {
         if (slot.getAvailable() < 1) {
             System.out.println("No vaccine available on given slot!");

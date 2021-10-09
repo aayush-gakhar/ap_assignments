@@ -47,19 +47,19 @@ public class Hospital {
         slots.add(slot);
     }
 
-    void displaySlots(){
+    void displaySlots() {
         for (Slot slot : slots) {
             System.out.println(slot.toString());
         }
     }
 
-    void displaySlots(Vaccine vaccine, Citizen citizen, Set<Integer> set){
+    void displaySlots(Vaccine vaccine, Citizen citizen, Set<Integer> set) {
         int s = 0, n = 0;
         if (citizen.getVaccinationStatus() == status.PARTIALLY_VACCINATED) {
             for (Slot slot : slots) {
                 if (slot.getVaccine() == vaccine && citizen.getNextDueDate() <= slot.getDay()) {
                     n++;
-                    System.out.println(s + "-> "+slot);
+                    System.out.println(s + "-> " + slot);
                     set.add(s);
                 }
                 s++;
@@ -68,7 +68,7 @@ public class Hospital {
             for (Slot slot : slots) {
                 if (slot.getVaccine() == vaccine) {
                     n++;
-                    System.out.println(s + "-> "+slot);
+                    System.out.println(s + "-> " + slot);
                     set.add(s);
                 }
                 s++;
@@ -78,16 +78,17 @@ public class Hospital {
             System.out.println("No slots available");
         }
     }
-    void displaySlots(Citizen citizen,Set<Integer> set){
+
+    void displaySlots(Citizen citizen, Set<Integer> set) {
         int s = 0, n = 0;
         if (citizen.getVaccinationStatus() == status.PARTIALLY_VACCINATED) {
             Vaccine vaccine = citizen.getVaccineGiven();
-            displaySlots(vaccine,citizen,set);
+            displaySlots(vaccine, citizen, set);
             return;
         } else {
             for (Slot slot : slots) {
                 n++;
-                System.out.println(s + "-> "+slot);
+                System.out.println(s + "-> " + slot);
                 set.add(s);
                 s++;
             }

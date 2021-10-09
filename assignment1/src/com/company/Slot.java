@@ -28,10 +28,12 @@ public class Slot {
     public int getAvailable() {
         return available;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Day: " + getDay() + " Vaccine: " + getVaccine().toString() + " Available Qty: " + getAvailable();
     }
+
     boolean book() {
         if (available > 0) {
             available--;
