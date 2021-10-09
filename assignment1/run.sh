@@ -1,6 +1,6 @@
 #!/bin/bash
 cd src/
-javac -d ../out/production/assignment1/ com/company/Main.java
-cd ../out/production/assignment1/
+javac -d ../build/ com/company/Main.java
+cd ../build/
 java com.company.Main
-cd ../../..
+cd ..
