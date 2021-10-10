@@ -6,19 +6,12 @@ public class Portal {
     private final Scanner scanner;
     private final List<Vaccine> vaccines = new LinkedList<>();
     private final List<Hospital> hospitals = new LinkedList<>();
-    //    private final List<Citizen> citizens = new LinkedList<>();
     private final Map<String, Citizen> citizenIDs = new HashMap<>();
     private final Map<String, Vaccine> vaccineName = new HashMap<>();
     private final Map<Vaccine, Set<Hospital>> searchVaccine = new HashMap<>();
 
     Portal(Scanner scanner) {
         this.scanner = scanner;
-    }
-
-    void pressEnter() {
-//        try {
-//            System.in.read();
-//        }catch (Exception e){}
     }
 
     void addVaccine(String name, int noOfDoses, int gapBetweenDoses) {
@@ -31,7 +24,6 @@ public class Portal {
         vaccineName.put(name, vaccine);
         searchVaccine.put(vaccine, new HashSet<>());
         System.out.println("Vaccine Name: " + name + ", Number of Doses: " + noOfDoses + ", Gap Between Doses: " + gapBetweenDoses);
-        pressEnter();
     }
 
     void registerHospital(String hospitalName, String pincode) {
@@ -39,7 +31,6 @@ public class Portal {
         hospitals.add(hospital);
         System.out.println("Allocated Hospital ID is " + hospital.gethID());
         System.out.println("Hospital Name: " + hospitalName + ", PinCode: " + pincode + ", Unique ID: " + hospital.gethID());
-        pressEnter();
     }
 
     void registerCitizen(String name, int age, String ID) {
@@ -49,52 +40,40 @@ public class Portal {
             System.out.println("Already registered on this unique ID");
         } else {
             Citizen citizen = new Citizen(name, age, ID);
-//            citizens.add(citizen);
             citizenIDs.put(ID, citizen);
         }
-        pressEnter();
 
     }
 
-    void createSlot(int hospitalID) {
-        Hospital hospital = hospitals.get(hospitalID);
-        System.out.print("Enter number of Slots to be added: ");
-        int n = scanner.nextInt();
-        if (n < 1) {
-            System.out.println("n should  be +ve");
+    void createSlot(Hospital hospital) {
+        System.out.print("Enter Day Number: ");
+        int day = scanner.nextInt();
+        if (day < 0) {
+            System.out.println("day should  be +ve");
             return;
         }
-        for (int i = 0; i < n; i++) {
-            System.out.print("Enter Day Number: ");
-            int day = scanner.nextInt();
-            if (day < 0) {
-                System.out.println("day should  be +ve");
-                return;
-            }
-            System.out.print("Enter Quantity: ");
-            int quantity = scanner.nextInt();
-            if (quantity < 1) {
-                System.out.println("quantity should  be +ve");
-                return;
-            }
-            System.out.println("Select Vaccine");
-            int vac = 0;
-            for (Vaccine vaccine : vaccines) {
-                System.out.println(vac++ + ". " + vaccine.toString());
-            }
-            int in = scanner.nextInt();
-            if (in < 0 || in >= vaccines.size()) {
-                System.out.println("incorrect input");
-                return;
-            }
-            Vaccine vaccine = vaccines.get(in);
-            Slot slot = new Slot(day, quantity, vaccine);
-            hospital.addSlot(slot); // association
-
-            searchVaccine.get(vaccine).add(hospital);
-            System.out.println("Slot added by Hospital " + hospital.gethID() + " for " + slot);
+        System.out.print("Enter Quantity: ");
+        int quantity = scanner.nextInt();
+        if (quantity < 1) {
+            System.out.println("quantity should  be +ve");
+            return;
         }
-        pressEnter();
+        System.out.println("Select Vaccine");
+        int vac = 0;
+        for (Vaccine vaccine : vaccines) {
+            System.out.println(vac++ + ". " + vaccine.toString());
+        }
+        int in = scanner.nextInt();
+        if (in < 0 || in >= vaccines.size()) {
+            System.out.println("incorrect input");
+            return;
+        }
+        Vaccine vaccine = vaccines.get(in);
+        Slot slot = new Slot(day, quantity, vaccine);
+        hospital.addSlot(slot);
+
+        searchVaccine.get(vaccine).add(hospital);
+        System.out.println("Slot added by Hospital " + hospital.gethID() + " for " + slot);
     }
 
     void bookSlot() {
@@ -195,7 +174,6 @@ public class Portal {
             return;
         }
         citizen.bookSlot(hospital.getSlots().get(ID));
-        pressEnter();
     }
 
     void getSlot(int hospitalID) {
@@ -205,7 +183,6 @@ public class Portal {
         }
         Hospital hospital = hospitals.get(hospitalID);
         hospital.displaySlots();
-        pressEnter();
     }
 
     void getVaccinationStatus(String ID) {
@@ -215,7 +192,6 @@ public class Portal {
         }
         System.out.print("Status: ");
         citizenIDs.get(ID).printVaccinationStatus();
-        pressEnter();
     }
 
     public static void main(String[] args) {
@@ -298,7 +274,16 @@ public class Portal {
                     System.out.println("Given hospital ID does not exist");
                     return;
                 }
-                portal.createSlot(hospitalID);
+                Hospital hospital = portal.hospitals.get(hospitalID);
+                System.out.print("Enter number of Slots to be added: ");
+                int n = scanner.nextInt();
+                if (n < 1) {
+                    System.out.println("n should  be +ve");
+                    return;
+                }
+                for (int i = 0; i < n; i++) {
+                    portal.createSlot(hospital);
+                }
             } else if (query == 5) {
                 portal.bookSlot();
             } else if (query == 6) {
