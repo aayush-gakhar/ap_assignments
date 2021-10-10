@@ -221,7 +221,7 @@ public class Portal {
                 int noOfDoses = scanner.nextInt();
                 if (noOfDoses < 1) {
                     System.out.println("No of doses should be positive");
-                    return;
+                    continue;
                 }
                 int gapBetweenDoses;
                 if (noOfDoses == 1) {
@@ -231,7 +231,7 @@ public class Portal {
                     gapBetweenDoses = scanner.nextInt();
                     if (gapBetweenDoses < 0) {
                         System.out.println("No of doses should be positive");
-                        return;
+                        continue;
                     }
                 }
                 portal.addVaccine(name, noOfDoses, gapBetweenDoses);
@@ -242,7 +242,7 @@ public class Portal {
                 String pincode = scanner.next();
                 if (pincode.length() != 6) {
                     System.out.println("Pincode length should  be 6");
-                    return;
+                    continue;
                 }
                 portal.registerHospital(hospitalName, pincode);
             } else if (query == 3) {
@@ -252,13 +252,13 @@ public class Portal {
                 int age = scanner.nextInt();
                 if (age < 0) {
                     System.out.println("age should be positive.");
-                    return;
+                    continue;
                 }
                 System.out.print("Unique ID: ");
                 String ID = scanner.next();
                 if (ID.length() != 12) {
                     System.out.println("unique ID length should  be 12");
-                    return;
+                    continue;
                 }
                 System.out.println("Citizen Name: " + name + ", Age: " + age + ", Unique ID: " + ID);
                 portal.registerCitizen(name, age, ID);
@@ -267,19 +267,19 @@ public class Portal {
                 String hID = scanner.next();
                 if (hID.length() != 6) {
                     System.out.println("hospital ID length should  be 6");
-                    return;
+                    continue;
                 }
                 int hospitalID = Integer.parseInt(hID);
                 if (hospitalID >= Hospital.getCount()) {
                     System.out.println("Given hospital ID does not exist");
-                    return;
+                    continue;
                 }
                 Hospital hospital = portal.hospitals.get(hospitalID);
                 System.out.print("Enter number of Slots to be added: ");
                 int n = scanner.nextInt();
                 if (n < 1) {
                     System.out.println("n should  be +ve");
-                    return;
+                    continue;
                 }
                 for (int i = 0; i < n; i++) {
                     portal.createSlot(hospital);
