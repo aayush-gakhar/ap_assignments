@@ -1,5 +1,5 @@
 package com.company;
 
-interface LectureMaterial{
+interface LectureMaterial {
     String toString();
 }

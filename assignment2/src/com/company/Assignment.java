@@ -7,13 +7,14 @@ public class Assignment implements Assessment {
     private final String problemStatement;
     private final int maxMarks;
     private final Instructor poster;
-    private final List<Submission> submissions=new LinkedList<>();
+    private final List<Submission> submissions = new LinkedList<>();
     private boolean closed;
-    Assignment(String problemStatement,int maxMarks,Instructor poster){
-        this.problemStatement=problemStatement;
-        this.maxMarks=maxMarks;
-        this.poster=poster;
-        this.closed=false;
+
+    Assignment(String problemStatement, int maxMarks, Instructor poster) {
+        this.problemStatement = problemStatement;
+        this.maxMarks = maxMarks;
+        this.poster = poster;
+        this.closed = false;
     }
 
     @Override
@@ -22,8 +23,8 @@ public class Assignment implements Assessment {
     }
 
     @Override
-    public String toString(){
-        return "Assignment: "+problemStatement+" Max Marks: "+maxMarks;
+    public String toString() {
+        return "Assignment: " + problemStatement + " Max Marks: " + maxMarks;
     }
 
     @Override
@@ -32,12 +33,12 @@ public class Assignment implements Assessment {
     }
 
     @Override
-    public boolean isClosed(){
+    public boolean isClosed() {
         return closed;
     }
 
     @Override
-    public void close(){
-        closed=true;
+    public void close() {
+        closed = true;
     }
 }

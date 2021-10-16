@@ -5,10 +5,15 @@ public class Instructor implements Person {
     private final int ID;
     private final String name;
     private final Backpack backpack;
+
     Instructor(Backpack backpack) {
         this.ID = count++;
         this.name = "I" + ID;
         this.backpack = backpack;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     @Override
@@ -19,10 +24,6 @@ public class Instructor implements Person {
     @Override
     public String toString() {
         return name;
-    }
-
-    public static int getCount() {
-        return count;
     }
 
     @Override

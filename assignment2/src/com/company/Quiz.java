@@ -7,13 +7,14 @@ public class Quiz implements Assessment {
     private final String question;
     private final int maxMarks;
     private final Instructor poster;
-    private final List<Submission> submissions=new LinkedList<>();
+    private final List<Submission> submissions = new LinkedList<>();
     private boolean closed;
-    Quiz(String question,Instructor poster){
-        this.question=question;
-        this.maxMarks=1;
-        this.poster=poster;
-        this.closed=false;
+
+    Quiz(String question, Instructor poster) {
+        this.question = question;
+        this.maxMarks = 1;
+        this.poster = poster;
+        this.closed = false;
     }
 
     @Override
@@ -22,8 +23,8 @@ public class Quiz implements Assessment {
     }
 
     @Override
-    public String toString(){
-        return "Question: "+question;
+    public String toString() {
+        return "Question: " + question;
     }
 
     @Override
@@ -32,16 +33,16 @@ public class Quiz implements Assessment {
     }
 
     @Override
-    public boolean isClosed(){
+    public boolean isClosed() {
         return closed;
     }
 
     @Override
-    public void close(){
-        closed=true;
+    public void close() {
+        closed = true;
     }
 
-    public String getQuestion(){
+    public String getQuestion() {
         return question;
     }
 }

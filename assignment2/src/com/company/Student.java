@@ -1,17 +1,23 @@
 package com.company;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Student implements Person {
     private static int count = 0;
     private final int ID;
     private final String name;
     private final Backpack backpack;
-    private final Map<Assessment,Submission> submitted=new HashMap<>();
+    private final Map<Assessment, Submission> submitted = new HashMap<>();
+
     Student(Backpack backpack) {
         this.ID = count++;
         this.name = "S" + ID;
         this.backpack = backpack;
+    }
+
+    public static int getCount() {
+        return count;
     }
 
     @Override
@@ -22,10 +28,6 @@ public class Student implements Person {
     @Override
     public String toString() {
         return name;
-    }
-
-    public static int getCount() {
-        return count;
     }
 
     @Override
@@ -67,15 +69,15 @@ public class Student implements Person {
 
     public void viewGrades() {
         System.out.println("Graded submissions");
-        for (Submission submission:submitted.values()){
-            if(submission.isGraded()){
+        for (Submission submission : submitted.values()) {
+            if (submission.isGraded()) {
                 System.out.println(submission);
             }
         }
         System.out.println("----------------------------\n" +
                 "Ungraded submissions");
-        for (Submission submission:submitted.values()){
-            if(!submission.isGraded()){
+        for (Submission submission : submitted.values()) {
+            if (!submission.isGraded()) {
                 System.out.println(submission);
             }
         }
