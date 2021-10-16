@@ -1,15 +1,21 @@
 package com.company;
 
+import java.util.*;
+
 public class Student implements Person {
     private static int count = 0;
     private final int ID;
     private final String name;
     private final Backpack backpack;
-
+    private final Map<Assessment,Submission> submitted=new HashMap<>();
     Student(Backpack backpack) {
         this.ID = count++;
-        this.name = "I" + ID;
+        this.name = "S" + ID;
         this.backpack = backpack;
+    }
+
+    public Map<Assessment, Submission> getSubmitted() {
+        return submitted;
     }
 
     @Override
@@ -27,19 +33,19 @@ public class Student implements Person {
         if (option < 1 || option > 9) {
             System.out.println("Invalid option");
         } else if (option == 1) {
-            viewLectureMaterial();
+            backpack.viewLectureMaterial();
         } else if (option == 2) {
-            viewAssessments();
+            backpack.viewAssessments();
         } else if (option == 3) {
-            submitAssessments();
+            backpack.submitAssessments();
         } else if (option == 4) {
             viewGrades();
         } else if (option == 5) {
-            viewComments();
+            backpack.viewComments();
         } else if (option == 6) {
-            addComments();
+            backpack.addComment();
         } else {
-            logout();
+            backpack.logout();
         }
     }
 
@@ -59,31 +65,20 @@ public class Student implements Person {
     }
 
 
-    public void viewLectureMaterial() {
-
-    }
-
-    public void viewAssessments() {
-
-    }
-
-    public void submitAssessments() {
-
-    }
 
     public void viewGrades() {
-
-    }
-
-    public void viewComments() {
-        backpack.viewComments();
-    }
-
-    public void addComments() {
-        backpack.addComment();
-    }
-
-    public void logout() {
-        backpack.logout();
+        System.out.println("Graded submissions");
+        for (Submission submission:submitted.values()){
+            if(submission.isGraded()){
+                System.out.println(submission);
+            }
+        }
+        System.out.println("----------------------------\n" +
+                "Ungraded submissions");
+        for (Submission submission:submitted.values()){
+            if(!submission.isGraded()){
+                System.out.println(submission);
+            }
+        }
     }
 }

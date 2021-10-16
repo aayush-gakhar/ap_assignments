@@ -19,7 +19,7 @@ public class Slides implements LectureMaterial {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Title: " + title);
-        int i = 0;
+        int i = 1;
         for (String s : content) {
             stringBuilder.append("\nSlide ").append(i++).append(": ").append(s);
         }

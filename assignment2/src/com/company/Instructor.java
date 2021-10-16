@@ -5,8 +5,6 @@ public class Instructor implements Person {
     private final int ID;
     private final String name;
     private final Backpack backpack;
-
-
     Instructor(Backpack backpack) {
         this.ID = count++;
         this.name = "I" + ID;
@@ -40,40 +38,6 @@ public class Instructor implements Person {
                 9. Logout""";
     }
 
-
-
-    public void addAssessments() {
-
-    }
-
-    public void gradeAssessment() {
-
-    }
-
-    public void closeAssessment() {
-
-    }
-
-    public void viewLectureMaterial() {
-
-    }
-
-    public void viewAssessments() {
-
-    }
-
-    public void viewComments() {
-        backpack.viewComments();
-    }
-
-    public void addComments() {
-        backpack.addComment();
-    }
-
-    public void logout() {
-        backpack.logout();
-    }
-
     @Override
     public void query(int option) {
         if (option < 1 || option > 9) {
@@ -81,21 +45,21 @@ public class Instructor implements Person {
         } else if (option == 1) {
             backpack.addClassMaterial();
         } else if (option == 2) {
-            addAssessments();
+            backpack.addAssessments();
         } else if (option == 3) {
-            viewLectureMaterial();
+            backpack.viewLectureMaterial();
         } else if (option == 4) {
-            viewAssessments();
+            backpack.viewAssessments();
         } else if (option == 5) {
-            gradeAssessment();
+            backpack.gradeAssessment();
         } else if (option == 6) {
-            closeAssessment();
+            backpack.closeAssessment();
         } else if (option == 7) {
-            viewComments();
+            backpack.viewComments();
         } else if (option == 8) {
-            addComments();
+            backpack.addComment();
         } else {
-            logout();
+            backpack.logout();
         }
     }
 
