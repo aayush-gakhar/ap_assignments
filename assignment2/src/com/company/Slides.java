@@ -17,6 +17,7 @@ public class Slides implements LectureMaterial {
         this.uploader = uploader;
     }
 
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder("Title: " + title);
         int i = 1;

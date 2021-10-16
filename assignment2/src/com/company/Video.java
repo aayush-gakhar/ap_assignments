@@ -15,6 +15,7 @@ public class Video implements LectureMaterial{
         this.uploader=uploader;
     }
 
+    @Override
     public String toString(){
         return "Title of video: " + title + "\nVideo file: " + file + "\nDate of upload: " + dateOfUpload + "\nUploaded by: " + uploader;
     }

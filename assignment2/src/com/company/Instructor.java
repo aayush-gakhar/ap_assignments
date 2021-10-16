@@ -25,6 +25,7 @@ public class Instructor implements Person {
         return count;
     }
 
+    @Override
     public String getMenu() {
         return """
                 1. Add class material
@@ -62,6 +63,5 @@ public class Instructor implements Person {
             backpack.logout();
         }
     }
-
 
 }

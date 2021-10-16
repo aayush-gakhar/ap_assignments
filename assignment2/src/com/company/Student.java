@@ -14,10 +14,6 @@ public class Student implements Person {
         this.backpack = backpack;
     }
 
-    public Map<Assessment, Submission> getSubmitted() {
-        return submitted;
-    }
-
     @Override
     public int getID() {
         return ID;
@@ -26,6 +22,26 @@ public class Student implements Person {
     @Override
     public String toString() {
         return name;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    @Override
+    public String getMenu() {
+        return """
+                1. View lecture materials
+                2. View assessments
+                3. Submit assessment
+                4. View grades
+                5. View comments
+                6. Add comments
+                7. Logout""";
+    }
+
+    public Map<Assessment, Submission> getSubmitted() {
+        return submitted;
     }
 
     @Override
@@ -48,23 +64,6 @@ public class Student implements Person {
             backpack.logout();
         }
     }
-
-    public String getMenu() {
-        return """
-                1. View lecture materials
-                2. View assessments
-                3. Submit assessment
-                4. View grades
-                5. View comments
-                6. Add comments
-                7. Logout""";
-    }
-
-    public static int getCount() {
-        return count;
-    }
-
-
 
     public void viewGrades() {
         System.out.println("Graded submissions");

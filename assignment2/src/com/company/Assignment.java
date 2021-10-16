@@ -16,23 +16,27 @@ public class Assignment implements Assessment {
         this.closed=false;
     }
 
+    @Override
     public List<Submission> getSubmissions() {
         return submissions;
     }
 
-    public String getProblemStatement() {
-        return problemStatement;
-    }
-
-    public int getMaxMarks() {
-        return maxMarks;
-    }
+    @Override
     public String toString(){
         return "Assignment: "+problemStatement+" Max Marks: "+maxMarks;
     }
+
+    @Override
+    public int getMaxMarks() {
+        return maxMarks;
+    }
+
+    @Override
     public boolean isClosed(){
         return closed;
     }
+
+    @Override
     public void close(){
         closed=true;
     }
