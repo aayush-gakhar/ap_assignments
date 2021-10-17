@@ -241,7 +241,7 @@ public class Backpack {
         i = scanner.nextInt();
         Submission submission;
         try {
-            submission = assessment.getSubmissions().get(id);
+            submission = assessment.getSubmissions().get(i);
             if(submission.isGraded()){
                 System.out.println("Invalid input");
                 return;
