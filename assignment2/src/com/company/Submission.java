@@ -9,5 +9,5 @@ public interface Submission {
 
     Person getStudent();
 
-    void grade(int marks, Instructor gradedBy);
+    void grade(int marks, Person gradedBy);
 }

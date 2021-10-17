@@ -3,13 +3,13 @@ package com.company;
 import java.util.Date;
 
 public class Slides implements LectureMaterial {
-    String title;
-    int noOfSlides;
-    String[] content;
-    Date dateOfUpload;
-    Instructor uploader;
+    private final String title;
+    private final int noOfSlides;
+    private final String[] content;
+    private final Date dateOfUpload;
+    private final Person uploader;
 
-    Slides(String title, int noOfSlides, String[] content, Instructor uploader) {
+    Slides(String title, int noOfSlides, String[] content, Person uploader) {
         this.title = title;
         this.noOfSlides = noOfSlides;
         this.content = content;

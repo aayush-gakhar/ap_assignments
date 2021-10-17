@@ -5,7 +5,7 @@ public class QuizSubmission implements Submission {
     private final String ans;
     private boolean graded;
     private int marks;
-    private Instructor gradedBy;
+    private Person gradedBy;
 
     QuizSubmission(Person student, String ans) {
         this.student = student;
@@ -34,7 +34,7 @@ public class QuizSubmission implements Submission {
     }
 
     @Override
-    public void grade(int marks, Instructor gradedBy) {
+    public void grade(int marks, Person gradedBy) {
         if (isGraded()) return;
         graded = true;
         this.marks = marks;

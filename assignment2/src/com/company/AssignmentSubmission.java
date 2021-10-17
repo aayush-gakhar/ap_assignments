@@ -5,7 +5,7 @@ public class AssignmentSubmission implements Submission {
     private final String file;
     private boolean graded;
     private int marks;
-    private Instructor gradedBy;
+    private Person gradedBy;
 
     AssignmentSubmission(Person student, String file) {
         this.student = student;
@@ -25,7 +25,7 @@ public class AssignmentSubmission implements Submission {
 
     @Override
     public String toString() {
-        return "Submission: " + file + (isGraded() ? "\nMarks scored: " + marks + "Graded by: " + gradedBy : "");
+        return "Submission: " + file + (isGraded() ? "\nMarks scored: " + marks + "\nGraded by: " + gradedBy : "");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AssignmentSubmission implements Submission {
     }
 
     @Override
-    public void grade(int marks, Instructor gradedBy) {
+    public void grade(int marks, Person gradedBy) {
         if (isGraded()) return;
         graded = true;
         this.marks = marks;

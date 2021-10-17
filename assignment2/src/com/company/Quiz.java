@@ -6,14 +6,14 @@ import java.util.List;
 public class Quiz implements Assessment {
     private final String question;
     private final int maxMarks;
-    private final Instructor poster;
+//    private final Instructor poster;
     private final List<Submission> submissions = new LinkedList<>();
     private boolean closed;
 
-    Quiz(String question, Instructor poster) {
+    Quiz(String question) {
         this.question = question;
         this.maxMarks = 1;
-        this.poster = poster;
+//        this.poster = poster;
         this.closed = false;
     }
 

@@ -3,12 +3,12 @@ package com.company;
 import java.util.Date;
 
 public class Video implements LectureMaterial {
-    String title;
-    String file;
-    Date dateOfUpload;
-    Instructor uploader;
+    private final String title;
+    private final String file;
+    private final Date dateOfUpload;
+    private final Person uploader;
 
-    Video(String title, String file, Instructor uploader) {
+    Video(String title, String file, Person uploader) {
         this.title = title;
         this.file = file;
         this.dateOfUpload = new Date();

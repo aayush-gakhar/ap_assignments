@@ -1,22 +1,15 @@
 package com.company;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Backpack {
-    Scanner scanner;
-    List<Instructor> instructors = new LinkedList<>();
-    List<Student> students = new LinkedList<>();
-    List<Comment> comments = new LinkedList<>();
-    List<LectureMaterial> lectureMaterials = new LinkedList<>();
-    List<Assessment> assessments = new LinkedList<>();
-    Person current;
-    String loginMenu = """
-            Welcome to Backpack
-            1. Enter as instructor
-            2. Enter as student
-            3. Exit""";
+    private final Scanner scanner;
+    private final List<Instructor> instructors = new LinkedList<>();
+    private final List<Student> students = new LinkedList<>();
+    private final List<Comment> comments = new LinkedList<>();
+    private final List<LectureMaterial> lectureMaterials = new LinkedList<>();
+    private final List<Assessment> assessments = new LinkedList<>();
+    private Person current;
 
     Backpack(Scanner scanner, int noOfInstructors, int noOfStudents) {
         this.scanner = scanner;
@@ -38,11 +31,16 @@ public class Backpack {
         }
     }
 
-    boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return current != null;
     }
 
-    boolean login() {
+    public boolean login() {
+        String loginMenu = """
+                Welcome to Backpack
+                1. Enter as instructor
+                2. Enter as student
+                3. Exit""";
         System.out.println(loginMenu);
         int option = scanner.nextInt();
         while (option > 3 || option < 1) {
@@ -87,9 +85,9 @@ public class Backpack {
         current = null;
     }
 
-    boolean checkExtension(String file, String extension) {
+    public boolean checkExtension(String file, String extension) {
         String[] split = file.split("\\.");
-        return split.length == 2 && split[1].equals(extension);
+        return split.length != 2 || !split[1].equals(extension);
 
     }
 
@@ -104,6 +102,10 @@ public class Backpack {
             String title = scanner.nextLine();
             System.out.print("Enter number of slides: ");
             int noOfSlides = scanner.nextInt();
+            if(noOfSlides<1){
+                System.out.println("Invalid input. required positive input");
+                return;
+            }
             scanner.nextLine();
             String[] content = new String[noOfSlides];
             System.out.println("Enter content of slides");
@@ -111,18 +113,18 @@ public class Backpack {
                 System.out.printf("Content of slide %d: ", i + 1);
                 content[i] = scanner.nextLine();
             }
-            lectureMaterials.add(new Slides(title, noOfSlides, content, (Instructor) current));
+            lectureMaterials.add(new Slides(title, noOfSlides, content, current));
         } else if (option == 2) {
             scanner.nextLine();
             System.out.print("Enter topic of video: ");
             String title = scanner.nextLine();
             System.out.print("Enter filename of video: ");
             String file = scanner.nextLine();
-            if (!checkExtension(file, "mp4")) {
+            if (checkExtension(file, "mp4")) {
                 System.out.println("Invalid filename");
                 return;
             }
-            lectureMaterials.add(new Video(title, file, (Instructor) current));
+            lectureMaterials.add(new Video(title, file, current));
         } else {
             System.out.println("Invalid input");
         }
@@ -139,12 +141,16 @@ public class Backpack {
             String problemStatement = scanner.nextLine();
             System.out.print("Enter max marks: ");
             int maxMarks = scanner.nextInt();
-            assessments.add(new Assignment(problemStatement, maxMarks, (Instructor) current));
+            if(maxMarks<1){
+                System.out.println("Invalid input. required positive input");
+                return;
+            }
+            assessments.add(new Assignment(problemStatement, maxMarks));
         } else if (option == 2) {
             scanner.nextLine();
             System.out.print("Enter quiz question: ");
             String question = scanner.nextLine();
-            assessments.add(new Quiz(question, (Instructor) current));
+            assessments.add(new Quiz(question));
         } else {
             System.out.println("Invalid input");
         }
@@ -168,9 +174,11 @@ public class Backpack {
     public void submitAssessments() {
         System.out.println("Pending assessments");
         int c = 0, id = 0;
+        Set<Integer> valid=new HashSet<>();
         for (Assessment assessment : assessments) {
-            if (!((Student) current).getSubmitted().containsKey(assessment)) {
+            if (!((Student) current).getSubmitted().containsKey(assessment) && !assessment.isClosed()) {
                 c++;
+                valid.add(id);
                 System.out.println("ID: " + id + " " + assessment + "\n----------------");
             }
             id++;
@@ -180,13 +188,17 @@ public class Backpack {
             return;
         }
         System.out.print("Enter ID of assessment: ");
-        int ID = scanner.nextInt();
-        Assessment assessment = assessments.get(ID);
+        id = scanner.nextInt();
+        if(!valid.contains(id)){
+            System.out.println("Invalid id");
+            return;
+        }
+        Assessment assessment = assessments.get(id);
         if (assessment.getClass() == Assignment.class) {
             scanner.nextLine();
             System.out.print("Enter filename of assignment: ");
             String file = scanner.nextLine();
-            if (!checkExtension(file, "zip")) {
+            if (checkExtension(file, "zip")) {
                 System.out.println("Invalid filename");
                 return;
             }
@@ -208,19 +220,45 @@ public class Backpack {
         viewAssessments();
         System.out.print("Enter ID of assessment to view submissions: ");
         int id = scanner.nextInt();
+        Assessment assessment;
+        try {
+            assessment = assessments.get(id);
+            if(assessment.isClosed()){
+                System.out.println("Invalid input");
+                return;
+            }
+        }catch (Exception e){
+            System.out.println("Invalid input");
+            return;
+        }
         System.out.println("Choose ID from these ungraded submissions");
         int i = 0;
-        Assessment assessment = assessments.get(id);
         for (Submission submission : assessment.getSubmissions()) {
-            System.out.println(i++ + ". " + submission.getStudent());
+            if(!submission.isGraded()){
+                System.out.println(i++ + ". " + submission.getStudent());
+            }
         }
         i = scanner.nextInt();
-        Submission submission = assessment.getSubmissions().get(i);
+        Submission submission;
+        try {
+            submission = assessment.getSubmissions().get(id);
+            if(submission.isGraded()){
+                System.out.println("Invalid input");
+                return;
+            }
+        }catch (Exception e){
+            System.out.println("Invalid input");
+            return;
+        }
         System.out.println("Submission:\n" + submission + "\n-------------------------------");
         System.out.println("Max Marks: " + assessment.getMaxMarks());
         System.out.print("Marks scored: ");
         int marks = scanner.nextInt();
-        submission.grade(marks, (Instructor) current);
+        if(marks<0 || marks>assessment.getMaxMarks()){
+            System.out.println("Invalid marks.");
+            return;
+        }
+        submission.grade(marks, current);
     }
 
     public void closeAssessment() {
@@ -228,7 +266,18 @@ public class Backpack {
         viewAssessments();
         System.out.print("Enter ID of assessment to close: ");
         int id = scanner.nextInt();
-        assessments.get(id).close();
+        Assessment assessment;
+        try {
+            assessment = assessments.get(id);
+            if(assessment.isClosed()){
+                System.out.println("Invalid input");
+                return;
+            }
+        }catch (Exception e){
+            System.out.println("Invalid input");
+            return;
+        }
+        assessment.close();
 
     }
 

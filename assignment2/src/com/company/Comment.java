@@ -3,9 +3,9 @@ package com.company;
 import java.util.Date;
 
 public class Comment {
-    String text;
-    Person poster;
-    Date dateOfPosting;
+    private final String text;
+    private final Person poster;
+    private final Date dateOfPosting;
 
     Comment(String text, Person poster) {
         this.text = text;
