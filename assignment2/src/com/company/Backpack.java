@@ -165,9 +165,7 @@ public class Backpack {
     public void viewAssessments() {
         int id = 0;
         for (Assessment assessment : assessments) {
-            if (!assessment.isClosed()) {
-                System.out.println("ID: " + id++ + " " + assessment + "\n----------------");
-            }
+             System.out.println("ID: " + id++ + " " + assessment + "\n----------------");
         }
     }
 
@@ -223,10 +221,6 @@ public class Backpack {
         Assessment assessment;
         try {
             assessment = assessments.get(id);
-            if(assessment.isClosed()){
-                System.out.println("Invalid input");
-                return;
-            }
         }catch (Exception e){
             System.out.println("Invalid input");
             return;
@@ -235,8 +229,8 @@ public class Backpack {
         int i = 0;
         for (Submission submission : assessment.getSubmissions()) {
             if(!submission.isGraded()){
-                System.out.println(i++ + ". " + submission.getStudent());
-            }
+                System.out.println(i + ". " + submission.getStudent());
+            }i++;
         }
         i = scanner.nextInt();
         Submission submission;
@@ -263,9 +257,14 @@ public class Backpack {
 
     public void closeAssessment() {
         System.out.println("List of open assignments: ");
-        viewAssessments();
+        int id = 0;
+        for (Assessment assessment : assessments) {
+            if (!assessment.isClosed()) {
+                System.out.println("ID: " + id + " " + assessment + "\n----------------");
+            }id++;
+        }
         System.out.print("Enter ID of assessment to close: ");
-        int id = scanner.nextInt();
+        id = scanner.nextInt();
         Assessment assessment;
         try {
             assessment = assessments.get(id);
