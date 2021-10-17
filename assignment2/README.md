@@ -33,7 +33,8 @@ Discussions in forums are an important part of any active learning environment. 
 For simulating this assignment you will be required to create a dummy course with some dummy accounts for both instructor and students. And at any point in time, you should be able to log out of a user and log in as another user. When logged in as an instructor we should be able to use the system from the perspective of an instructor. When we log in as a student we should be able to perform functions required by a student.
 Please thoroughly go through the sample run below to understand the program flow. Please refrain from asking questions related to your approaches from the TAs and hope you are able to help BYLD with the following task.
 Some repetitive print statements:
- INSTRUCTOR MENU
+ 
+INSTRUCTOR MENU
 1. Add class material
 2. Add assessments
 3. View lecture materials 4. View assessments
@@ -41,11 +42,18 @@ Some repetitive print statements:
 6. Close assessment
 7. View comments
 8. Add comments
-9. LogoutSTUDENT MENU
-1. View lecture materials 2. View assessments
+9. Logout
+
+STUDENT MENU
+1. View lecture materials 
+2. View assessments
 3. Submit assessment
 4. View grades
-5. View comments 6. Add comments 7. LogoutIn the sample case below, when we say {INSTRUCTOR MENU} and {STUDENT MENU}, consider the above-mentioned statements in place.
+5. View comments 
+6. Add comments 
+7. Logout
+
+In the sample case below, when we say {INSTRUCTOR MENU} and {STUDENT MENU}, consider the above-mentioned statements in place.
 Note:
 1. .zip and .mp4 file extension must be maintained where required. The input format specified above should not be violated. This means, if a student enters “submission.rar” for an assignment, it is not a valid submission and should not be accepted.
 2. Other than that no error handling is required.
