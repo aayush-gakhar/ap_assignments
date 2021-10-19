@@ -1,6 +1,6 @@
 import java.util.*;
 
-interface User {
+interface Person {
     int getID();
 
     String toString();

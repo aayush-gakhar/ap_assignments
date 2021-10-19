@@ -9,7 +9,7 @@ public class Backpack {
     private final List<Comment> comments = new LinkedList<>();
     private final List<LectureMaterial> lectureMaterials = new LinkedList<>();
     private final List<Assessment> assessments = new LinkedList<>();
-    private User current;
+    private Person current;
 
     Backpack(Scanner scanner, int noOfInstructors, int noOfStudents) {
         this.scanner = scanner;

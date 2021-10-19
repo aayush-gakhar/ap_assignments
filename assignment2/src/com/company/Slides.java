@@ -7,9 +7,9 @@ public class Slides implements LectureMaterial {
     private final int noOfSlides;
     private final String[] content;
     private final Date dateOfUpload;
-    private final User uploader;
+    private final Person uploader;
 
-    Slides(String title, int noOfSlides, String[] content, User uploader) {
+    Slides(String title, int noOfSlides, String[] content, Person uploader) {
         this.title = title;
         this.noOfSlides = noOfSlides;
         this.content = content;
