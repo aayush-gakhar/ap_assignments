@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class Comment {
     private final String text;
-    private final Person poster;
+    private final User poster;
     private final Date dateOfPosting;
 
-    Comment(String text, Person poster) {
+    Comment(String text, User poster) {
         this.text = text;
         this.poster = poster;
         this.dateOfPosting = new Date();

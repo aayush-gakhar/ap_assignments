@@ -1,13 +1,13 @@
 package com.company;
 
 public class QuizSubmission implements Submission {
-    private final Person student;
+    private final User student;
     private final String ans;
     private boolean graded;
     private int marks;
-    private Person gradedBy;
+    private User gradedBy;
 
-    QuizSubmission(Person student, String ans) {
+    QuizSubmission(User student, String ans) {
         this.student = student;
         this.ans = ans;
         this.graded = false;
@@ -29,12 +29,12 @@ public class QuizSubmission implements Submission {
     }
 
     @Override
-    public Person getStudent() {
+    public User getStudent() {
         return student;
     }
 
     @Override
-    public void grade(int marks, Person gradedBy) {
+    public void grade(int marks, User gradedBy) {
         if (isGraded()) return;
         graded = true;
         this.marks = marks;

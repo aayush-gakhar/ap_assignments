@@ -1,6 +1,6 @@
 package com.company;
 
-interface Person {
+interface User {
     int getID();
 
     String toString();

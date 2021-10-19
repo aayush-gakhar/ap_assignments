@@ -1,6 +1,6 @@
 package com.company;
 
-public class Instructor implements Person {
+public class Instructor implements User {
     private static int count = 0;
     private final int ID;
     private final String name;

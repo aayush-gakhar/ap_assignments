@@ -9,7 +9,7 @@ public class Backpack {
     private final List<Comment> comments = new LinkedList<>();
     private final List<LectureMaterial> lectureMaterials = new LinkedList<>();
     private final List<Assessment> assessments = new LinkedList<>();
-    private Person current;
+    private User current;
 
     Backpack(Scanner scanner, int noOfInstructors, int noOfStudents) {
         this.scanner = scanner;
@@ -214,6 +214,10 @@ public class Backpack {
     }
 
     public void gradeAssessment() {
+        if(assessments.size()==0){
+            System.out.println("No assessments present.");
+            return;
+        }
         System.out.println("List of assessments");
         viewAssessments();
         System.out.print("Enter ID of assessment to view submissions: ");

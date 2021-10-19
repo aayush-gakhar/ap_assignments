@@ -7,7 +7,7 @@ public interface Submission {
 
     String toString();
 
-    Person getStudent();
+    User getStudent();
 
-    void grade(int marks, Person gradedBy);
+    void grade(int marks, User gradedBy);
 }

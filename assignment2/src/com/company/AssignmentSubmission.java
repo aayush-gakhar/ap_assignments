@@ -1,13 +1,13 @@
 package com.company;
 
 public class AssignmentSubmission implements Submission {
-    private final Person student;
+    private final User student;
     private final String file;
     private boolean graded;
     private int marks;
-    private Person gradedBy;
+    private User gradedBy;
 
-    AssignmentSubmission(Person student, String file) {
+    AssignmentSubmission(User student, String file) {
         this.student = student;
         this.file = file;
         this.graded = false;
@@ -29,12 +29,12 @@ public class AssignmentSubmission implements Submission {
     }
 
     @Override
-    public Person getStudent() {
+    public User getStudent() {
         return student;
     }
 
     @Override
-    public void grade(int marks, Person gradedBy) {
+    public void grade(int marks, User gradedBy) {
         if (isGraded()) return;
         graded = true;
         this.marks = marks;

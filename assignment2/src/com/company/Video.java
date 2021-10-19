@@ -6,9 +6,9 @@ public class Video implements LectureMaterial {
     private final String title;
     private final String file;
     private final Date dateOfUpload;
-    private final Person uploader;
+    private final User uploader;
 
-    Video(String title, String file, Person uploader) {
+    Video(String title, String file, User uploader) {
         this.title = title;
         this.file = file;
         this.dateOfUpload = new Date();

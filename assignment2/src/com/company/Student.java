@@ -3,7 +3,7 @@ package com.company;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Student implements Person {
+public class Student implements User {
     private static int count = 0;
     private final int ID;
     private final String name;
