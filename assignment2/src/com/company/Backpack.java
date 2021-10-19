@@ -230,11 +230,16 @@ public class Backpack {
             return;
         }
         System.out.println("Choose ID from these ungraded submissions");
-        int i = 0;
+        int i = 0,n=0;
         for (Submission submission : assessment.getSubmissions()) {
             if(!submission.isGraded()){
                 System.out.println(i + ". " + submission.getStudent());
+                n++;
             }i++;
+        }
+        if(n==0){
+            System.out.println("No submission");
+            return;
         }
         i = scanner.nextInt();
         Submission submission;
@@ -261,11 +266,16 @@ public class Backpack {
 
     public void closeAssessment() {
         System.out.println("List of open assignments: ");
-        int id = 0;
+        int id = 0,n=0;
         for (Assessment assessment : assessments) {
             if (!assessment.isClosed()) {
                 System.out.println("ID: " + id + " " + assessment + "\n----------------");
+                n++;
             }id++;
+        }
+        if(n==0){
+            System.out.println("No open assessment");
+            return;
         }
         System.out.print("Enter ID of assessment to close: ");
         id = scanner.nextInt();
