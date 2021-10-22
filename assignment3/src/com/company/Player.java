@@ -2,14 +2,14 @@ package com.company;
 
 public class Player {
     private final String name;
-    private int position=-1;
-    private int points=0;
-    private Floor currentFloor;
     private final Game game;
+    private int position = -1;
+    private int points = 0;
+    private Floor currentFloor;
 
-    Player(String name,Game game){
-        this.name=name;
-        this.game=game;
+    Player(String name, Game game) {
+        this.name = name;
+        this.game = game;
     }
 
     public String toString() {
@@ -22,7 +22,7 @@ public class Player {
 
     public void movePosition(int move) {
         position += move;
-        currentFloor=game.getFloors().get(position);
+        currentFloor = game.getFloors().get(position);
     }
 
     public int getPoints() {

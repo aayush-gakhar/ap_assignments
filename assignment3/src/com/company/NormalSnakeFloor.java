@@ -1,13 +1,13 @@
 package com.company;
 
-public class NormalSnakeFloor extends SnakeFloor{
+public class NormalSnakeFloor extends SnakeFloor {
 
-    NormalSnakeFloor(){
-        super(-2,-4);
+    NormalSnakeFloor() {
+        super(-2, -4);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Normal snake Floor";
     }
 }

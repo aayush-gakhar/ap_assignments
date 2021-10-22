@@ -1,8 +1,8 @@
 package com.company;
 
-public abstract class LadderFloor extends Floor{
+public abstract class LadderFloor extends Floor {
 
-    LadderFloor(int points,int jump){
-        super(points,jump);
+    LadderFloor(int points, int jump) {
+        super(points, jump);
     }
 }
