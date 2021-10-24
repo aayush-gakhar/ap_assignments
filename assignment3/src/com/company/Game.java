@@ -1,5 +1,8 @@
 package com.company;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,10 +32,10 @@ public class Game {
         System.out.println("The game setup is ready");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the player name and hit enter");
-        String name = scanner.nextLine();
+        String name =scanner.nextLine();
         Game game = new Game(name);
         while (true) {
             System.out.print("Hit enter to roll the dice");
@@ -43,6 +46,10 @@ public class Game {
             if (game.player.getPosition() == 13) {
                 System.out.println("Game over");
                 System.out.println(game.player + " accumulated " + game.player.getPoints() + " points");
+//                Path fileName = Path.of("/Users/aayushgakhar/Desktop/score.txt");
+//                int max=Integer.parseInt(Files.readString(fileName));
+//                if(game.player.getPoints()>max)
+//                    Files.writeString(fileName,String.valueOf(game.player.getPoints()));
                 break;
             }
         }
