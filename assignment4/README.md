@@ -20,14 +20,14 @@ This is a single-player game with a really simple objective: the player gets 5 c
 land on the carpet of tiles. Every time the player lands on a random tile, s/he may win a soft toy.
 The player stores all the soft toys he has won in a bucket. Once the player has hopped five
 times, the game ends after listing out the details of the soft toys won by the player.
-1. Tile Carpet
+1. Tile Carpet:
 As shown in the picture, the carpet has 20 tiles. Each tile contains a unique soft toy. You can
 use your imagination to have a unique soft toy stored at each tile. If the player lands on an
 even-numbered tile, he directly wins the soft toy stored at that tile, otherwise, the player has to
 solve a question. In this case, the soft toy is won only in case the player’s answer was correct.
 There is also a possibility that the player is too energetic and jumps really long to land into the
 muddy puddles at the end of the tile carpet.
-2. Question Solving using a Calculator
+2. Question Solving using a Calculator:
 The game contains a generic calculator for calculating either the result of the division of two
 integers or for calculating the result of the concatenation of two strings. It doesn’t work on any
 other data types. If the player lands on an odd-numbered tile, the game asks the player if he
@@ -40,7 +40,7 @@ strings of length four. The game will then ask the player to enter the result of
 of these two strings. The game will then pass these two strings to the generic calculator to verify
 the player’s result. If the player’s calculation matches that of the calculator, the player will win
 the soft toy.
-3. Bucket to Store Soft Toys
+3. Bucket to Store Soft Toys:
 Every time the player wins a soft toy at any tile, the tile will create a clone of its soft toy and then
 hand it over to the player to store it in his bucket. At the end of the game, the game will simply
 display all the soft toys collected by the player.
