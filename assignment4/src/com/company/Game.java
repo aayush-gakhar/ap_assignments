@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Game {
     private final Player player=new Player();
@@ -67,28 +64,8 @@ public class Game {
             }else{
                 System.out.println("You landed on tile "+tile);
                 if(tile%2==0){
-                    System.out.println("Question answer round. Integer or string?");
-                    String type = scanner.next();
-                    if (type.equals("integer")) {
-                        Integer[] arr= generator.generateIntegers();
-                        System.out.printf("Calculate the result of %d divided by %d\n",arr[0],arr[1]);
-                        int correctAnswer=strCalculator.calculate(arr);
-                        int answer=scanner.nextInt();
-                        if(answer==correctAnswer){
-                            System.out.println("Correct answer");
-                        }else {
-                            continue;
-                        }
-                    }else if(type.equals("string")){
-                        String[] arr=generator.generateStrings();
-                        System.out.printf("Calculate the concatenation of strings %s and %s",arr[0],arr[1]);
-                        String correctAnswer=strCalculator.calculate(arr);
-                        String answer=scanner.next();
-                        if(correctAnswer.equals(answer)){
-                            System.out.println("Correct answer");
-                        }else {
-                            continue;
-                        }
+                    if(!askQuestion()){
+                        continue;
                     }
                 }
                 System.out.printf("You won a %s soft toy\n",tiles.get(tile-1).getToy());
@@ -109,6 +86,46 @@ public class Game {
         }
     }
 
+    public boolean askQuestion(){
+        System.out.println("Question answer round. Integer or string?");
+        String type = scanner.next().toLowerCase();
+        if (type.equals("integer") || type.equals("i")) {
+            Integer[] arr = generator.generateIntegers();
+            System.out.printf("Calculate the result of %d divided by %d\n", arr[0], arr[1]);
+            int answer;
+            while(true) {
+                try {
+                    answer= scanner.nextInt();
+                    break;
+                } catch (InputMismatchException e) {
+                    System.out.println("Wrong input");
+                }
+            }
+
+            if(intCalculator.calculate(arr,answer)){
+                System.out.println("Correct answer");
+                return true;
+            }else {
+                System.out.println("Incorrect answer");
+                return false;
+            }
+        }else if(type.equals("string") || type.equals("s")) {
+            String[] arr = generator.generateStrings();
+            System.out.printf("Calculate the concatenation of strings %s and %s\n", arr[0], arr[1]);
+            String answer = scanner.next();
+            if (strCalculator.calculate(arr, answer)) {
+                System.out.println("Correct answer");
+                return true;
+            } else {
+                System.out.println("Incorrect answer");
+                return false;
+            }
+        }else {
+            System.out.println("Invalid input");
+            return askQuestion();
+        }
+    }
+
     public String strTurn(){
         return switch (counter) {
             case 0 -> "first";
@@ -125,6 +142,3 @@ public class Game {
     }
 
 }
-// doubts:
-// 1. integer division?
-// 2. generic, exceptions,

@@ -7,8 +7,9 @@ public class Generator {
 
     public Integer[] generateIntegers() {
         Integer[] array = new Integer[2];
-        array[0] = random.nextInt();
-        array[1] = random.nextInt();
+        array[1] = random.nextInt(Integer.MAX_VALUE/16);
+        int a=random.nextInt(15)+1;
+        array[0] = a*array[1];
         return array;
     }
 
