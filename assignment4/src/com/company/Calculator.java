@@ -11,6 +11,5 @@ public class Calculator<T> {
             String b=String.valueOf(array[1]);
             return (a+b).equals(String.valueOf(answer));
         }
-
     }
 }
