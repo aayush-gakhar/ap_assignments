@@ -46,12 +46,12 @@ public class Game {
     }
 
     public static void pressEnter() {
-//        try {
-//            System.in.read();
-//        } catch (Exception e) {
-//
-//        }
-        System.out.println();
+        try {
+            System.in.read();
+        } catch (Exception e) {
+
+        }
+//        System.out.println();
     }
 
     public void start() {
