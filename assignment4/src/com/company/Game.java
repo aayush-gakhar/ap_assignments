@@ -65,6 +65,7 @@ public class Game {
                 System.out.println("You landed on tile "+tile);
                 if(tile%2==0){
                     if(!askQuestion()){
+                        counter++;
                         continue;
                     }
                 }
