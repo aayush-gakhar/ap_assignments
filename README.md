@@ -1,9 +1,6 @@
-# AP_assignment
+# OOPS projects
 
 repo for AP assignments
 
 Aayush Gakhar
-2020006
 
-CSE
-2024
